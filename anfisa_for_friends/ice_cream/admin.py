@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db import models
+from django.forms import Textarea, TextInput
 
 from .models import Category, IceCream, Topping, Wrapper
 
@@ -10,9 +12,15 @@ class IceCreamInline(admin.TabularInline):
               'is_on_main',
               'description',
               'category',
-              'wrapper'),
+              'wrapper',
+              'toppings',),
     model = IceCream
     extra = 0
+
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '30'})},
+        models.TextField: {'widget': Textarea(attrs={'rows': 5, 'cols': 45})},
+    }
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -44,6 +52,7 @@ class IceCreamAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
     filter_horizontal = ('toppings',)
     actions_selection_counter = False
+
 
 
 admin.site.register(Category, CategoryAdmin)
