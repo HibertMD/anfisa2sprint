@@ -60,6 +60,8 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+*.sqlite
+*.sqlite3
 
 # Flask stuff:
 instance/
@@ -130,3 +132,4 @@ dmypy.json
 
 #vscode
 .vscode/
+/pyvenv.cfg
