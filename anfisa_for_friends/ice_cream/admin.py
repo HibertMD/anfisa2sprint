@@ -1,6 +1,51 @@
 from django.contrib import admin
 
-from .models import Category
+from .models import Category, IceCream, Topping, Wrapper
 
-admin.site.register(Category)
+admin.site.empty_value_display = 'Не задано'
 
+class IceCreamInline(admin.TabularInline):
+    fields = ('title',
+              'is_published',
+              'is_on_main',
+              'description',
+              'category',
+              'wrapper'),
+    model = IceCream
+    extra = 0
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    inlines = (
+        IceCreamInline,
+    )
+    list_display = (
+        'title',
+    )
+
+
+@admin.register(IceCream)
+class IceCreamAdmin(admin.ModelAdmin):
+    list_display = (
+        'title',
+        'description',
+        'is_published',
+        'is_on_main',
+        'category',
+        'wrapper',
+    )
+    list_editable = (
+        'is_published',
+        'is_on_main',
+        'category'
+    )
+    search_fields = ('title',)
+    list_filter = ('category',)
+    list_display_links = ('title',)
+    filter_horizontal = ('toppings',)
+    actions_selection_counter = False
+
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Topping)
+admin.site.register(Wrapper)
