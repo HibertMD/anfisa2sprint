@@ -22,7 +22,7 @@ class IceCreamInline(admin.TabularInline):
         models.TextField: {'widget': Textarea(attrs={'rows': 5, 'cols': 45})},
     }
 
-
+@admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     inlines = (
         IceCreamInline,
@@ -41,6 +41,7 @@ class IceCreamAdmin(admin.ModelAdmin):
         'is_on_main',
         'category',
         'wrapper',
+        'output_order',
     )
     list_editable = (
         'is_published',
@@ -54,7 +55,5 @@ class IceCreamAdmin(admin.ModelAdmin):
     actions_selection_counter = False
 
 
-
-admin.site.register(Category, CategoryAdmin)
 admin.site.register(Topping)
 admin.site.register(Wrapper)
